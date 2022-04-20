@@ -14,7 +14,7 @@ from sklearn.model_selection import train_test_split
 
 ####################################################################################################
 
-def preparaBaseStroke (base):
+def preparaBaseDerrame (base):
     base = pd.read_csv(base)
 
     previsores = base.iloc[:, 0:11].values
@@ -35,7 +35,7 @@ def preparaBaseStroke (base):
     X_train, X_test, y_train, y_test = train_test_split (previsores, classe, test_size=0.25, random_state = 42)
     return X_train, X_test, y_train, y_test
 
-def preparaBaseHeart (base):
+def preparaBaseInfarto (base):
     base = pd.read_csv(base)
 
     previsores = base.iloc[:, 1:18].values
@@ -98,15 +98,15 @@ def regressaoLogistica (X_train, X_test, y_train, y_test):
     print (accuracy_score (y_test, y_pred)) 
 
 def main():
-    base_stroke = 'https://raw.githubusercontent.com/ccopceski/machine-learn/main/healthcare-dataset-stroke.csv'
-    base_heart  = 'https://raw.githubusercontent.com/ccopceski/machine-learn/main/heart_2020_cleaned.csv'
+    base_derrame = 'https://raw.githubusercontent.com/ccopceski/machine-learn/main/healthcare-dataset-stroke.csv'
+    base_infarto = 'https://raw.githubusercontent.com/ccopceski/machine-learn/main/heart_2020_cleaned.csv'
 
-    menu = int(input ("Escolha a base de dados:\n1 - Derrames\n2 - Infartos"))
+    menu = int(input ("Escolha a base de dados:\n1 - Derrames\n2 - Infartos\n"))
 
     if (menu == 1):
-        X_train, X_test, y_train, y_test = preparaBaseStroke (base_stroke)
+        X_train, X_test, y_train, y_test = preparaBaseDerrame (base_derrame)
 
-        print ("\nInfartos:\n")
+        print ("\nDerrames:\n")
         naiveBayes (X_train, X_test, y_train, y_test)
 
         arvoreDecisao (X_train, X_test, y_train, y_test)
@@ -117,9 +117,9 @@ def main():
 
     else:
         if (menu == 2):
-            X_train, X_test, y_train, y_test = preparaBaseHeart (base_heart)
+            X_train, X_test, y_train, y_test = preparaBaseInfarto (base_infarto)
             
-            print ("\nDerrames:\n")
+            print ("\nInfartos:\n")
             naiveBayes (X_train, X_test, y_train, y_test)
 
             arvoreDecisao (X_train, X_test, y_train, y_test)
